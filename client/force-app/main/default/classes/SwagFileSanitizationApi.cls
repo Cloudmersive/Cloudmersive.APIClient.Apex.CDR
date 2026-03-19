@@ -26,19 +26,20 @@ public class SwagFileSanitizationApi {
     }
 
     /**
-     * Complete Content Disarm and Reconstruction on an Input File, and output in same file format
+     * Content Disarm and Reconstruction on a File
      * Processes the input file via CDR to produce a secured output file.  Input content is parsed, disarmed, and then reconstructed into a new output file with the same file format as the input.
      * @param inputFile Input document, or photos of a document, to extract data from (optional)
+     * @return String
      * @throws Swagger.ApiException if fails to make API call
      */
-    public void file(Map<String, Object> params) {
+    public String file(Map<String, Object> params) {
         List<Swagger.Param> query = new List<Swagger.Param>();
         List<Swagger.Param> form = new List<Swagger.Param>();
 
         // cast form params to verify their expected type
         form.addAll(client.makeParam('InputFile', (Blob) params.get('inputFile')));
 
-        client.invoke(
+        return (String) client.invoke(
             'POST', '/cdr/sanitization/file', '',
             query, form,
             new Map<String, Object>(),
@@ -46,23 +47,74 @@ public class SwagFileSanitizationApi {
             new List<String>{ 'application/json' },
             new List<String>{ 'application/x-www-form-urlencoded' },
             new List<String> { 'Apikey' },
-            null
+            String.class
         );
     }
     /**
-     * Complete Content Disarm and Reconstruction on an Input File with PDF/A Output
-     * Processes the input file via CDR to produce a secured PDF/A output file.  Input content is parsed, disarmed, and then reconstructed into a new PDF/A output file.
-     * @param inputFile Input document, or photos of a document, to extract data from (optional)
+     * Advanced Content Disarm and Reconstruction on a File
+     * Processes the input file via CDR to produce a secured output file with advanced scan options and response headers containing scan metadata.
+     * @param allowExecutables Set to false to block executable files (EXE, DLL, etc.) (optional)
+     * @param allowInvalidFiles Set to false to block files that are not valid for their detected type (optional)
+     * @param allowScripts Set to false to block script files. PDF and Office macro sanitization still runs regardless. (optional)
+     * @param allowPasswordProtectedFiles Set to false to block password-protected files (optional)
+     * @param allowMacros Set to false to block files containing macros. Office macro removal still runs regardless. (optional)
+     * @param allowXmlExternalEntities Set to false to block XML files with external entity references (XXE) (optional)
+     * @param allowInsecureDeserialization Set to false to block files with insecure deserialization patterns (optional)
+     * @param allowHtml Set to false to block HTML files (optional)
+     * @param allowUnsafeArchives Set to false to block archive files flagged as unsafe (e.g., zip bombs) (optional)
+     * @param allowOleEmbeddedObject Set to false to block files with embedded OLE objects (optional)
+     * @param allowUnwantedAction Set to false to block files with unwanted actions (optional)
+     * @param restrictFileTypes Comma-separated list of allowed file extensions (e.g., &quot;.pdf,.docx,.xlsx&quot;). Files not matching will be blocked. (optional)
+     * @param inputFile Input document to CDR process (optional)
+     * @return String
      * @throws Swagger.ApiException if fails to make API call
      */
-    public void fileToPdf(Map<String, Object> params) {
+    public String fileAdvanced(Map<String, Object> params) {
         List<Swagger.Param> query = new List<Swagger.Param>();
         List<Swagger.Param> form = new List<Swagger.Param>();
 
         // cast form params to verify their expected type
         form.addAll(client.makeParam('InputFile', (Blob) params.get('inputFile')));
 
-        client.invoke(
+        return (String) client.invoke(
+            'POST', '/cdr/sanitization/file/advanced', '',
+            query, form,
+            new Map<String, Object>(),
+            new Map<String, Object>{
+                'allowExecutables' => (Boolean) params.get('allowExecutables'),
+                'allowInvalidFiles' => (Boolean) params.get('allowInvalidFiles'),
+                'allowScripts' => (Boolean) params.get('allowScripts'),
+                'allowPasswordProtectedFiles' => (Boolean) params.get('allowPasswordProtectedFiles'),
+                'allowMacros' => (Boolean) params.get('allowMacros'),
+                'allowXmlExternalEntities' => (Boolean) params.get('allowXmlExternalEntities'),
+                'allowInsecureDeserialization' => (Boolean) params.get('allowInsecureDeserialization'),
+                'allowHtml' => (Boolean) params.get('allowHtml'),
+                'allowUnsafeArchives' => (Boolean) params.get('allowUnsafeArchives'),
+                'allowOleEmbeddedObject' => (Boolean) params.get('allowOleEmbeddedObject'),
+                'allowUnwantedAction' => (Boolean) params.get('allowUnwantedAction'),
+                'restrictFileTypes' => (String) params.get('restrictFileTypes')
+            },
+            new List<String>{ 'application/json' },
+            new List<String>{ 'application/x-www-form-urlencoded' },
+            new List<String> { 'Apikey' },
+            String.class
+        );
+    }
+    /**
+     * Content Disarm and Reconstruction on a File with PDFA Output
+     * Processes the input file via CDR to produce a secured PDF/A output file.  Input content is parsed, disarmed, and then reconstructed into a new PDF/A output file.
+     * @param inputFile Input document, or photos of a document, to extract data from (optional)
+     * @return String
+     * @throws Swagger.ApiException if fails to make API call
+     */
+    public String fileToPdf(Map<String, Object> params) {
+        List<Swagger.Param> query = new List<Swagger.Param>();
+        List<Swagger.Param> form = new List<Swagger.Param>();
+
+        // cast form params to verify their expected type
+        form.addAll(client.makeParam('InputFile', (Blob) params.get('inputFile')));
+
+        return (String) client.invoke(
             'POST', '/cdr/sanitization/file/to/pdf', '',
             query, form,
             new Map<String, Object>(),
@@ -70,7 +122,57 @@ public class SwagFileSanitizationApi {
             new List<String>{ 'application/json' },
             new List<String>{ 'application/x-www-form-urlencoded' },
             new List<String> { 'Apikey' },
-            null
+            String.class
+        );
+    }
+    /**
+     * Advanced Content Disarm and Reconstruction on a File with PDFA Output
+     * Processes the input file via CDR to produce a secured PDF/A output file with advanced scan options and response headers containing scan metadata.
+     * @param allowExecutables Set to false to block executable files (EXE, DLL, etc.) (optional)
+     * @param allowInvalidFiles Set to false to block files that are not valid for their detected type (optional)
+     * @param allowScripts Set to false to block script files. PDF and Office macro sanitization still runs regardless. (optional)
+     * @param allowPasswordProtectedFiles Set to false to block password-protected files (optional)
+     * @param allowMacros Set to false to block files containing macros. Office macro removal still runs regardless. (optional)
+     * @param allowXmlExternalEntities Set to false to block XML files with external entity references (XXE) (optional)
+     * @param allowInsecureDeserialization Set to false to block files with insecure deserialization patterns (optional)
+     * @param allowHtml Set to false to block HTML files (optional)
+     * @param allowUnsafeArchives Set to false to block archive files flagged as unsafe (e.g., zip bombs) (optional)
+     * @param allowOleEmbeddedObject Set to false to block files with embedded OLE objects (optional)
+     * @param allowUnwantedAction Set to false to block files with unwanted actions (optional)
+     * @param restrictFileTypes Comma-separated list of allowed file extensions (e.g., &quot;.pdf,.docx,.xlsx&quot;). Files not matching will be blocked. (optional)
+     * @param inputFile Input document to CDR process (optional)
+     * @return String
+     * @throws Swagger.ApiException if fails to make API call
+     */
+    public String fileToPdfAdvanced(Map<String, Object> params) {
+        List<Swagger.Param> query = new List<Swagger.Param>();
+        List<Swagger.Param> form = new List<Swagger.Param>();
+
+        // cast form params to verify their expected type
+        form.addAll(client.makeParam('InputFile', (Blob) params.get('inputFile')));
+
+        return (String) client.invoke(
+            'POST', '/cdr/sanitization/file/to/pdf/advanced', '',
+            query, form,
+            new Map<String, Object>(),
+            new Map<String, Object>{
+                'allowExecutables' => (Boolean) params.get('allowExecutables'),
+                'allowInvalidFiles' => (Boolean) params.get('allowInvalidFiles'),
+                'allowScripts' => (Boolean) params.get('allowScripts'),
+                'allowPasswordProtectedFiles' => (Boolean) params.get('allowPasswordProtectedFiles'),
+                'allowMacros' => (Boolean) params.get('allowMacros'),
+                'allowXmlExternalEntities' => (Boolean) params.get('allowXmlExternalEntities'),
+                'allowInsecureDeserialization' => (Boolean) params.get('allowInsecureDeserialization'),
+                'allowHtml' => (Boolean) params.get('allowHtml'),
+                'allowUnsafeArchives' => (Boolean) params.get('allowUnsafeArchives'),
+                'allowOleEmbeddedObject' => (Boolean) params.get('allowOleEmbeddedObject'),
+                'allowUnwantedAction' => (Boolean) params.get('allowUnwantedAction'),
+                'restrictFileTypes' => (String) params.get('restrictFileTypes')
+            },
+            new List<String>{ 'application/json' },
+            new List<String>{ 'application/x-www-form-urlencoded' },
+            new List<String> { 'Apikey' },
+            String.class
         );
     }
 }

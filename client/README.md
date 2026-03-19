@@ -52,7 +52,8 @@ Map<String, Object> params = new Map<String, Object>{
 
 try {
     // cross your fingers
-    api.file(params);
+    String result = api.file(params);
+    System.debug(result);
 } catch (Swagger.ApiException e) {
     // ...handle your exceptions
 }
@@ -64,12 +65,15 @@ All URIs are relative to *https://api.cloudmersive.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*SwagFileSanitizationApi* | [**file**](docs/SwagFileSanitizationApi.md#file) | **POST** /cdr/sanitization/file | Complete Content Disarm and Reconstruction on an Input File, and output in same file format
-*SwagFileSanitizationApi* | [**fileToPdf**](docs/SwagFileSanitizationApi.md#fileToPdf) | **POST** /cdr/sanitization/file/to/pdf | Complete Content Disarm and Reconstruction on an Input File with PDF/A Output
+*SwagFileSanitizationApi* | [**file**](docs/SwagFileSanitizationApi.md#file) | **POST** /cdr/sanitization/file | Content Disarm and Reconstruction on a File
+*SwagFileSanitizationApi* | [**fileAdvanced**](docs/SwagFileSanitizationApi.md#fileAdvanced) | **POST** /cdr/sanitization/file/advanced | Advanced Content Disarm and Reconstruction on a File
+*SwagFileSanitizationApi* | [**fileToPdf**](docs/SwagFileSanitizationApi.md#fileToPdf) | **POST** /cdr/sanitization/file/to/pdf | Content Disarm and Reconstruction on a File with PDFA Output
+*SwagFileSanitizationApi* | [**fileToPdfAdvanced**](docs/SwagFileSanitizationApi.md#fileToPdfAdvanced) | **POST** /cdr/sanitization/file/to/pdf/advanced | Advanced Content Disarm and Reconstruction on a File with PDFA Output
 
 
 ## Documentation for Models
 
+ - [SwagProblemDetails](docs/SwagProblemDetails.md)
 
 
 ## Documentation for Authorization
